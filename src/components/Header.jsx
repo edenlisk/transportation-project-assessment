@@ -13,7 +13,7 @@ const Header = ({onStartup}) => {
 }
 
 Header.propTypes = {
-    onStartup: () => PropTypes.func.isRequired
+    onStartup:  PropTypes.func.isRequired
 }
 
 export default Header;
