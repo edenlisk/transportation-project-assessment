@@ -1,12 +1,12 @@
 import './App.css'
+import MainMap from "./components/MainMap.jsx";
 
 function App() {
-
-  return (
-    <>
-      <div>Real-time Ride-Share Tracking</div>
-    </>
-  )
+    return (
+        <>
+            <MainMap/>
+        </>
+    )
 }
 
 export default App
