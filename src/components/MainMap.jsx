@@ -49,7 +49,7 @@ const MainMap = () => {
         }
         const interval = setInterval(() => {
             moveCar();
-        }, 500);
+        }, 2200);
         return () => clearInterval(interval);
         // eslint-disable-next-line
     }, [isCarMoving, busPositionIndex, metrics, subRouteDirectionsResponse]);
