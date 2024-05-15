@@ -60,6 +60,3 @@ export const intermediateStops = [
     {lat: -1.9365670876910166, lng: 30.13020167024439}
 ]
 
-
-export const GOOGLE_MAPS_API_KEY = 'AIzaSyDHBAWqYy_IFdvzgfrgC0_xgZF7emYgsgc'
-
