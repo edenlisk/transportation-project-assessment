@@ -96,7 +96,6 @@ const MainMap = () => {
     async function calculateNextBusPosition() {
         if (busPositionIndex >= subRouteDirectionsResponse.routes[0].overview_path.length) {
             if (nextStopPointIndex + 1 === intermediateStops.length) {
-                console.log('car reached destination');
                 setBusPositionIndex(0);
                 setStartPointIndex(0);
                 setNextStopPointIndex(1);
