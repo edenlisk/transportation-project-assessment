@@ -27,9 +27,10 @@ const MainMap = () => {
     const [isCarMoving, setIsCarMoving] = useState(false);
     const [busPositionIndex, setBusPositionIndex] = useState(0);
     const [map, setMap] = useState(null);
+    const [subRouteDirectionsResponse, setSubRouteDirectionsResponse] = useState(null);
 
     async function drawRoute() {
-        const result = await calculateRouteMetrics(intermediateStops[0], intermediateStops[intermediateStops.length - 1], waypoints);
+        const result = await fetchRoute(intermediateStops[0], intermediateStops[intermediateStops.length - 1], waypoints);
         setDirectionsResponse(result);
     }
 
@@ -41,30 +42,27 @@ const MainMap = () => {
     useEffect(() => {
         const moveCar = async () => {
             if (isCarMoving) {
-                await calculateNextBusPosition();
+                if (subRouteDirectionsResponse) {
+                    await calculateNextBusPosition();
+                }
             }
         }
         const interval = setInterval(() => {
-            if (busPositionIndex >= directionsResponse?.routes[0].overview_path.length) {
-                setIsCarMoving(false);
-                return;
-            }
             moveCar();
-        }, 3200);
+        }, 500);
         return () => clearInterval(interval);
         // eslint-disable-next-line
-    }, [isCarMoving, busPositionIndex, metrics, directionsResponse]);
+    }, [isCarMoving, busPositionIndex, metrics, subRouteDirectionsResponse]);
 
     async function onStartup() {
         setIsCarMoving(true);
+        const result = await fetchRoute(intermediateStops[startPointIndex], intermediateStops[nextStopPointIndex]);
+        setSubRouteDirectionsResponse(result);
     }
 
+
     async function calculateNextStopMetrics(origin, destination, waypoints = []) {
-        const result = await calculateRouteMetrics(origin, destination, waypoints);
-        if (result.routes[0].legs[0].distance.value < 100) {
-            setNextStopPointIndex(prevState => prevState + 1);
-            setStartPointIndex(prevState => prevState + 1);
-        }
+        const result = await fetchRoute(origin, destination, waypoints);
         setMetrics(prevState => (
             {
                 ...prevState,
@@ -81,7 +79,7 @@ const MainMap = () => {
         setNextStopAddress(result.routes[0].legs[0].end_address);
     }
 
-    async function calculateRouteMetrics(origin, destination, waypoints = []) {
+    async function fetchRoute(origin, destination, waypoints = []) {
         if (map) {
             // eslint-disable-next-line
             const directionService = new google.maps.DirectionsService();
@@ -96,8 +94,27 @@ const MainMap = () => {
     }
 
     async function calculateNextBusPosition() {
-        if (busPositionIndex >= directionsResponse.routes[0].overview_path.length) return;
-        const coords = directionsResponse.routes[0].overview_path[busPositionIndex];
+        if (busPositionIndex >= subRouteDirectionsResponse.routes[0].overview_path.length) {
+            if (nextStopPointIndex + 1 === intermediateStops.length) {
+                console.log('car reached destination');
+                setBusPositionIndex(0);
+                setStartPointIndex(0);
+                setNextStopPointIndex(1);
+                setIsCarMoving(false);
+                return;
+            }
+            setStartPointIndex(prevState => prevState + 1);
+            setNextStopPointIndex(prevState => prevState + 1);
+            setBusPositionIndex(0);
+            const result = await fetchRoute(
+                intermediateStops[startPointIndex + 1],
+                intermediateStops[nextStopPointIndex + 1],
+                startPointIndex + 1 === 2 ? waypoints : []
+            );
+            setSubRouteDirectionsResponse(result);
+            return;
+        }
+        const coords = subRouteDirectionsResponse.routes[0].overview_path[busPositionIndex];
         await calculateNextStopMetrics(currentPosition, intermediateStops[nextStopPointIndex], startPointIndex === 2 ? waypoints : []);
         setCurrentPosition({lat: coords.lat(), lng: coords.lng()});
         map.setCenter(currentPosition);
