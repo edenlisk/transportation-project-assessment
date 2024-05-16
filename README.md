@@ -18,7 +18,6 @@
 - [🤝 Contributing](#contributing)
 - [⭐️ Show your support](#support)
 - [🙏 Acknowledgements](#acknowledgements)
-- [📝 License](#license)
 
 
 # 📖 [Real-time Ride-Share Tracking] <a name="about-project"></a>
@@ -108,12 +107,21 @@ You can deploy this project by using this command:
     npm run build
 ```
 
+### Testing
+
+This webpage uses modern testing technologies. It uses cypress for End-to-End and Component tests.
+
+```sh
+    npm run test
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 👥 Authors <a name="authors"></a>
 
 👤 **Edenlisk**
 
+- LinkedIn: [@edenlisk](https://www.linkedin.com/in/nsanzimfura-enock-nkumbuyedeni/)
 - GitHub: [@Edenlisk](https://github.com/edenlisk)
 - Twitter: [@Edenlisk](https://twitter.com/nkumbuyedeni)
 
