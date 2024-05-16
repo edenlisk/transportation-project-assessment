@@ -5,6 +5,7 @@
     - [🛠 Built With](#built-with)
         - [Tech Stack](#tech-stack)
         - [Key Features](#key-features)
+        - [Approach](#approach)
     - [🚀 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
     - [Setup](#setup)
@@ -49,6 +50,17 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+### Approach to Solve the Problem <a name="approach"></a>
+
+1. Render basic UI with Header based on Figma design and load the map using `useJsApiLoader`.
+2. Fetch route directions using Google Maps Directions Service.
+3. Initialize (draw) the full route from starting point (Nyabugogo) to ending point (Kimironko)
+   with five intermediate stops based on provided coordinates.
+4. Included additional custom waypoints to dictate route from second to third stop as the public transport buses need to use specific route (Not allowed to use road nearby Presidential palace).
+5. Wait for user to click `Startup` button to start car movement along the drawn route.
+6. When button is clicked, the marker simulating driver's movement is moved one step at time along the route while regularly updating the distance and ETA (Estimated Time of Arrival) to the next stop.
+
 ## 🚀 Live Demo <a name="live-demo"></a>
 Click [here](https://real-time-ride-share-tracking.vercel.app/) to view a live demo of the project.
 
@@ -65,7 +77,11 @@ To get a local copy up and running, follow these steps.
 
 In order to run this project you need:
 
-You need to have git installed and the desired code editor
+1. [Nodejs](https://nodejs.org/en)
+2. [Google Map API KEY](https://developers.google.com/maps/documentation/javascript/get-api-key)
+3. [Cypress System Requirements](https://docs.cypress.io/guides/getting-started/installing-cypress#System-requirements)
+4. Desired Code Editor
+
 
 ### Setup
 
