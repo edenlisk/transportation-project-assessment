@@ -121,7 +121,7 @@ const MainMap = () => {
     }
 
     if (!isLoaded) {
-        return <div>Loading....</div>
+        return <div className="loading">Loading....</div>
     }
 
     return (

@@ -16,8 +16,6 @@ const icons = [
         alt: 'notification icon'
     },
 ]
-// 60DFD4
-// 5fa9e0
 const Footer = () => {
     return (
         <div className="bg-gradient-to-r from-[#5fa9e0] to-[#7AD95C] flex justify-between items-center px-6 py-4 rounded-b-lg">
